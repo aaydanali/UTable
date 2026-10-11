@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Quercus Tracker",
+  "name": "UTable",
   "version": "0.0.1",
   "content_scripts": [
     {
