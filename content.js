@@ -11,7 +11,7 @@ function isCurrentTerm(course) {
 
 async function getCourses() {
     const response = await fetch("/api/v1/courses?enrollment_state=active&include[]=term")
-    const data = await response.json();
+    const data = parseJSON(await response.text());
     const current = data.filter(isCurrentTerm);
     console.log(data.length, "courses \u2192", current.length, "this term");
 
@@ -25,6 +25,14 @@ getCourses();
 async function getAssignments(courseID) {
     const url = `/api/v1/courses/${courseID}/assignments?per_page=100`;
     const response = await fetch(url);
-    const assignments = await response.json();
+    const assignments = parseJSON(await response.text());
     console.log(assignments);
+}
+
+function parseJSON(text) {
+    const prefix = "while(1);";
+    if (text.startsWith(prefix)) {
+        text = text.slice(prefix.length);
+    }
+    return JSON.parse(text);
 }
